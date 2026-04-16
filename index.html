@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Hub 📚</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+        }
+
+        .screen {
+            display: none;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .active {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .card:hover {
+            background: #334155;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            background: lime;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #timer {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+    <h1>📚 Study Hub</h1>
+    <div class="card" onclick="enterGrade('10')">🔼 Grade 10</div>
+    <div class="card" onclick="enterGrade('11')">🔽 Grade 11</div>
+</div>
+
+<!-- TIMETABLE -->
+<div id="timetable" class="screen">
+    <h1 id="gradeTitle"></h1>
+    <p id="timetableText"></p>
+    <button onclick="goSubjects()">Continue</button>
+</div>
+
+<!-- SUBJECTS -->
+<div id="subjects" class="screen">
+    <h1 id="subjectTitle"></h1>
+    <div id="subjectList"></div>
+</div>
+
+<script>
+let grade = "";
+let subject = "";
+let timeLeft = 3600;
+let timerInterval;
+let canExit = false;
+
+// SWITCH SCREEN
+function show(id) {
+    document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+// DATA (YOUR CONTENT CONTROL CENTER)
+const data = {
+    "10": {
+        subjects: {
+            "Mathematics": {
+                scheme: "Algebra, Fractions, Indices, Linear Equations",
+                lesson: `
+<h3>🔢 Algebraic Fractions</h3>
+<p><b>Meaning:</b> Fractions with algebraic expressions.</p>
+
+<p><b>Rules:</b></p>
+<ul>
+<li>Denominator must not be zero</li>
+<li>Always factor before simplifying</li>
+</ul>
+
+<p><b>Example:</b></p>
+<p>Simplify: (x² - 9)/(x - 3)</p>
+<p>Factor → (x-3)(x+3)/(x-3)</p>
+<p>Answer → x + 3 ✅</p>
+
+<p><b>Tips:</b></p>
+<ul>
+<li>Use LCM for addition</li>
+<li>Flip when dividing</li>
+</ul>
+`
+            },
+            "Biology": {
+                scheme: "Cells, Nutrition, Respiration",
+                lesson: `
+<h3>🧬 Cell Structure</h3>
+<p>The cell is the basic unit of life.</p>
+
+<ul>
+<li>Nucleus → controls activities</li>
+<li>Cytoplasm → where reactions happen</li>
+<li>Cell membrane → controls entry</li>
+</ul>
+`
+            }
+        }
+    },
+
+    "11": {
+        subjects: {
+            "Physics": {
+                scheme: "Motion, Force, Energy",
+                lesson: `
+<h3>⚡ Motion</h3>
+<p>Motion is change in position over time.</p>
+
+<p><b>Formula:</b></p>
+<p>Speed = Distance / Time</p>
+
+<p><b>Types:</b></p>
+<ul>
+<li>Uniform motion</li>
+<li>Accelerated motion</li>
+</ul>
+`
+            },
+            "Chemistry": {
+                scheme: "Atoms, Bonding, Periodic Table",
+                lesson: `
+<h3>🧪 Atomic Structure</h3>
+<p>Atoms are the smallest units of matter.</p>
+
+<ul>
+<li>Protons → positive</li>
+<li>Electrons → negative</li>
+<li>Neutrons → neutral</li>
+</ul>
+`
+            }
+        }
+    }
+};
+
+// SELECT GRADE
+function enterGrade(g) {
+    grade = g;
+
+    document.getElementById("gradeTitle").innerText = "Grade " + g;
+    document.getElementById("timetableText").innerText =
+        "Timetable for Grade " + g + " (edit this)";
+
+    show("timetable");
+}
+
+// GO SUBJECTS
+function goSubjects() {
+    let subjects = Object.keys(data[grade].subjects);
+
+    let container = document.getElementById("subjectList");
+    container.innerHTML = "";
+
+    document.getElementById("subjectTitle").innerText =
+        "Grade " + grade + " Subjects";
+
+    subjects.forEach(sub => {
+        let div = document.createElement("div");
+        div.className = "card";
+        div.innerText = sub;
+        div.onclick = () => selectSubject(sub);
+        container.appendChild(div);
+    });
+
+    show("subjects");
+}
+
+// SELECT SUBJECT
+function selectSubject(sub) {
+    subject = sub;
+
+    document.getElementById("schemeTitle").innerText = sub;
+    document.getElementById("schemeText").innerText =
+        data[grade].subjects[sub].scheme;
+
+    show("scheme");
+}
+
+// START LESSON
+function startLesson() {
+    timeLeft = 3600;
+    canExit = false;
+
+    document.getElementById("lessonTitle").innerText = subject;
+    document.getElementById("lessonContent").innerHTML =
+        data[grade].subjects[subject].lesson;
+
+    show("lesson");
+    startTimer();
+}
+
+// TIMER
+function startTimer() {
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+
+        let m = Math.floor(timeLeft / 60);
+        let s = timeLeft % 60;
+
+        document.getElementById("timer").innerText =
+            "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            canExit = true;
+            alert("Lesson complete 🎉");
+            show("subjects");
+        }
+    }, 1000);
+}
+
+// EXIT CONTROL
+function tryExit() {
+    if (!canExit) {
+        alert("❌ Finish the 1 hour lesson!");
+    } else {
+        show("subjects");
+    }
+}
+</script>
+<!-- SCHEME -->
+<div id="scheme" class="screen">
+    <h1 id="schemeTitle"></h1>
+    <p id="schemeText"></p>
+    <button onclick="startLesson()">Continue</button>
+</div>
+
+<!-- LESSON -->
+<div id="lesson" class="screen">
+    <h1 id="lessonTitle"></h1>
+    <p id="lessonContent"></p>
+    <h2 id="timer">⏱ 60:00</h2>
+    <button onclick="tryExit()">Exit</button>
+</div>
