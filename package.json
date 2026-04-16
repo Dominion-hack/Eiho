@@ -1,0 +1,13 @@
+{
+  "name": "study-hub",
+  "version": "1.0.0",
+  "description": "A mini online learning platform for Grade 10 and 11",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx live-server",
+    "dev": "npx live-server"
+  },
+  "author": "Dominion",
+  "license": "MIT",
+  "dependencies": {}
+}
