@@ -1,0 +1,35 @@
+{
+  "name": "dominion-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "Dominion Multi Session WhatsApp Bot",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "baileys",
+    "bot",
+    "multi-session",
+    "railway"
+  ],
+  "author": "Dominion",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "latest",
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "fs-extra": "^11.2.0",
+    "moment-timezone": "^0.5.45",
+    "node-fetch": "^2.7.0",
+    "pino": "^9.3.2",
+    "qrcode-terminal": "^0.12.0",
+    "socket.io": "^4.7.5",
+    "ws": "^8.17.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
