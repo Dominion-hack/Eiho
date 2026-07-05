@@ -1,87 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>TEMPLE_DOMIC_EMMZY_TECH</title>
-
-<link rel="stylesheet"
-href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anonymous Codex · Splash</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #0b0d1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0b0d1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      opacity: 1;
+      transform: scale(1);
+    }
+    #splash.fade-out {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+    .splash-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle at 30% 40%, rgba(0, 180, 255, 0.35), rgba(255, 255, 255, 0.1) 70%, transparent 80%);
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: pulseGlow 3s infinite alternate ease-in-out;
+    }
+    .splash-glow.two {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle at 70% 60%, rgba(70, 130, 255, 0.4), rgba(255, 255, 255, 0.05) 60%, transparent 80%);
+      filter: blur(70px);
+      animation: pulseGlow2 4s infinite alternate ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9) translate(-20px, -20px); opacity: 0.6; }
+      100% { transform: scale(1.4) translate(30px, 20px); opacity: 1; }
+    }
+    @keyframes pulseGlow2 {
+      0% { transform: scale(1) translate(20px, 10px); opacity: 0.5; }
+      100% { transform: scale(1.6) translate(-30px, -20px); opacity: 1; }
+    }
+    .splash-title {
+      position: relative;
+      z-index: 10;
+      font-size: 4.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a0d0ff, #ffffff, #7abfff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 30px rgba(70, 150, 255, 0.5);
+      animation: floatText 2.8s infinite alternate;
+    }
+    .splash-sub {
+      position: relative;
+      z-index: 10;
+      color: rgba(200, 225, 255, 0.7);
+      font-weight: 400;
+      font-size: 1.1rem;
+      margin-top: 8px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.03);
+      padding: 6px 20px;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .splash-arrows {
+      position: relative;
+      z-index: 10;
+      margin-top: 40px;
+      font-size: 2.2rem;
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: 18px;
+      animation: arrowDance 2.2s infinite alternate;
+    }
+    @keyframes floatText {
+      0% { transform: translateY(-4px) scale(1); text-shadow: 0 0 20px rgba(70, 150, 255, 0.3); }
+      100% { transform: translateY(8px) scale(1.02); text-shadow: 0 0 50px rgba(70, 180, 255, 0.7); }
+    }
+    @keyframes arrowDance {
+      0% { transform: translateX(-12px); opacity: 0.5; }
+      100% { transform: translateX(12px); opacity: 1; }
+    }
+    .splash-loader {
+      position: relative;
+      z-index: 10;
+      margin-top: 30px;
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(255,255,255,0.05);
+      border-top: 3px solid #4a8eff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @media (max-width: 480px) {
+      .splash-title { font-size: 2.8rem; }
+    }
+  </style>
 </head>
-
 <body>
+  <div id="splash">
+    <div class="splash-glow"></div>
+    <div class="splash-glow two"></div>
+    <div class="splash-title">Anonymous Codex</div>
+    <div class="splash-sub">⚡ AI · Python · JS ⚡</div>
+    <div class="splash-arrows">⬅ ➡ ⬆ ⬇ ↗ ↘ ↙ ↖</div>
+    <div class="splash-loader"></div>
+  </div>
 
-<div class="background"></div>
+  <script>
+    // Check if user is already logged in
+    function getSession() {
+      try { return JSON.parse(localStorage.getItem('codex_user')); } catch { return null; }
+    }
 
-<div class="container">
+    // After splash, redirect based on session
+    setTimeout(() => {
+      const splash = document.getElementById('splash');
+      splash.classList.add('fade-out');
 
-<h1 class="glow">
-SYSTEM ONLINE
-</h1>
-
-<p class="subtitle">
-Pairing System
-</p>
-
-<input
-type="text"
-id="number"
-placeholder="Enter WhatsApp Number">
-
-<button onclick="pairBot()">
-CONNECT
-</button>
-
-<div id="result"></div>
-
-</div>
-
-<div class="admin-circle"
-onclick="toggleAdmin()">
-⚙
-</div>
-
-<div class="admin-panel"
-id="adminPanel">
-
-<h2>ADMIN PANEL</h2>
-
-<input
-type="password"
-id="password"
-placeholder="Enter Password">
-
-<button onclick="loginAdmin()">
-LOGIN
-</button>
-
-<div id="controls"
-style="display:none;">
-
-<input
-type="text"
-id="imgurl"
-placeholder="Menu Image URL">
-
-<button onclick="updateImage()">
-UPDATE IMAGE
-</button>
-
-<button onclick="restartBot()">
-RESTART BOT
-</button>
-
-</div>
-
-</div>
-
-<script src="app.js"></script>
-
+      setTimeout(() => {
+        const session = getSession();
+        if (session) {
+          window.location.href = 'dashboard.html';
+        } else {
+          window.location.href = 'login.html';
+        }
+      }, 800);
+    }, 2500);
+  </script>
 </body>
 </html>
