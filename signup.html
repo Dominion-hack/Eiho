@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anonymous Codex · Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #0b0d1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .auth-container {
+      width: 100%;
+      max-width: 440px;
+      margin: 20px;
+      background: rgba(12, 16, 30, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(70, 150, 255, 0.15);
+      padding: 40px 32px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-container::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -30%;
+      width: 160%;
+      height: 180%;
+      background: radial-gradient(circle at 20% 30%, rgba(0, 120, 255, 0.08), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 2;
+    }
+    .auth-header i {
+      font-size: 2.8rem;
+      color: #6cb4ff;
+      filter: drop-shadow(0 0 20px #3f8eff);
+      margin-bottom: 8px;
+    }
+    .auth-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #b6d9ff, #f0f9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .auth-header p {
+      color: #8aa9e6;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
+    }
+    .auth-form input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 60px;
+      padding: 16px 22px;
+      font-size: 1rem;
+      color: #eaf2ff;
+      outline: none;
+      transition: 0.25s;
+      backdrop-filter: blur(4px);
+    }
+    .auth-form input:focus {
+      border-color: #4a8eff;
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 0 20px rgba(70, 140, 255, 0.15);
+    }
+    .auth-form input::placeholder {
+      color: #6d7fa3;
+      font-weight: 400;
+    }
+    .auth-form .btn-primary {
+      background: linear-gradient(145deg, #2b70e0, #1a4cbf);
+      border: none;
+      padding: 16px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 8px 24px -6px #1a4cbf60;
+      letter-spacing: 0.3px;
+      margin-top: 6px;
+    }
+    .auth-form .btn-primary:hover {
+      transform: scale(1.01);
+      box-shadow: 0 10px 32px -4px #1a4cbfb0;
+    }
+    .auth-error {
+      color: #ff8f8f;
+      font-size: 0.85rem;
+      text-align: center;
+      min-height: 24px;
+      margin-top: 6px;
+    }
+    .auth-success {
+      color: #4ade80;
+      font-size: 0.85rem;
+      text-align: center;
+      min-height: 24px;
+      margin-top: 6px;
+    }
+    .auth-footer {
+      text-align: center;
+      margin-top: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .auth-footer a {
+      color: #6cb4ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .auth-footer a:hover {
+      color: #8ac4ff;
+      text-decoration: underline;
+    }
+    .auth-footer p {
+      color: #6d7fa3;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 480px) {
+      .auth-container { padding: 30px 20px 28px; }
+      .auth-header h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>                                               <body>                                                  <div class="auth-container">
+    <div class="auth-header">
+      <i class="fas fa-user-plus"></i>
+      <h1>Create Account</h1>
+      <p>Start coding with AI today</p>
+    </div>
+    <form class="auth-form" id="signupForm">
+      <input type="text" id="signupUsername" placeholder="Username" required>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password (min 4 chars)" required>
+      <button class="btn-primary" id="signupBtn"><i class="fas fa-user-plus"></i> &nbsp;Create account</button>
+      <div class="auth-error" id="signupError"></div>
+      <div class="auth-success" id="signupSuccess"></div>
+    </form>
+    <div class="auth-footer">
+      <p>Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+  </div>
+
+  <script>                                                function getUsers() {                                   try { return JSON.parse(localStorage.getItem('codex_users')) || {}; } catch { return {}; }
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem('codex_users', JSON.stringify(users));
+    }
+
+    function setSession(user) {
+      localStorage.setItem('codex_user', JSON.stringify(user));
+    }
+
+    document.getElementById('signupBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('signupUsername').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const errorEl = document.getElementById('signupError');                                                     const successEl = document.getElementById('signupSuccess');
+
+      errorEl.textContent = '';
+      successEl.textContent = '';
+
+      if (!username || !email || !password) {
+        errorEl.textContent = '❌ All fields required.';
+        return;
+      }
+
+      if (password.length < 4) {
+        errorEl.textContent = '❌ Password must be at least 4 characters.';
+        return;
+      }
+
+      const users = getUsers();
+      for (const key in users) {
+        if (users[key].email === email) {
+          errorEl.textContent = '❌ Email already registered.';
+          return;
+        }
+        if (users[key].username === username) {
+          errorEl.textContent = '❌ Username taken.';
+          return;
+        }
+      }                                                                                                           users[username] = { username, email, password };
+      saveUsers(users);
+
+      const user = { username, email };
+      setSession(user);
+
+      successEl.textContent = '✅ Account created! Redirecting...';
+
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1200);
+    });
+
+    document.getElementById('signupForm').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('signupBtn').click();
+      }
+    });
+  </script>
+</body>
+</html>
